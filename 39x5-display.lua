@@ -1,7 +1,12 @@
+-- 39x5-display.lua
+-- Main program for a cheap-and-easy RGB led display
+-- Copyright (c) 2017 Rudi Niemeijer
+-- MIT License
+
 dofile("ws2812display.lua")
 dofile("tomthumbfont.lua")
 
-brightness=100
+brightness=10 -- Can be 1..255. Note that brightnesses over 10 use too much current to be powered by a NodeMCU
 clear()
 task = "time"
 msgStr = "hi, world"
@@ -9,6 +14,8 @@ msgHue = 0.1
 cycle = 1
 maxCycle = 5
 
+-- Plot a character c on address x, y in color hue
+-- x, y starts (1,1) in the lower-left corner
 function plotchar3x5(c, x, y, hue) -- Plot character c 3x5 bits at x, y in hue
   for i = 1, 5 do
     for j = 1, 3 do
@@ -22,6 +29,8 @@ function plotchar3x5(c, x, y, hue) -- Plot character c 3x5 bits at x, y in hue
   end
 end
 
+-- Print a string of characters s starting at x, y in color hue
+-- Repeatedly calls plotchar3x5 for each character in s
 function plotstring3x5(s, x, y, hue) -- Plot a string of characters at x, y in hue
   if s ~= nil then
     for i = 1, #s do
@@ -30,6 +39,8 @@ function plotstring3x5(s, x, y, hue) -- Plot a string of characters at x, y in h
   end
 end
 
+-- Get a text from somewhere, to show intermittedly
+-- Round-robin cycles through maxCycle messages
 function getMessage()
   if wifi.sta.status() == 5 then
     http.get("http://api.thingspeak.com/channels/370942/feeds.json?api_key=0S6ANV2R089MVOZH&results="..maxCycle, nil, function(code, data)
@@ -49,6 +60,7 @@ function getMessage()
   end
 end
 
+-- Main routine for displaying time and other goodies
 function display()
   if task == "time" then
     local tm = rtctime.epoch2cal(rtctime.get())
@@ -80,6 +92,10 @@ function resync()
   sntp.sync(nil, nil, nil, 1)
 end
 
+-- Three timers are used to get thing running
+-- One for switching between time and other info
+-- One for getting new messages from somewhere
+-- One (onetime) for re-syncing
 tmr.alarm(1, 10000, tmr.ALARM_AUTO, display)
 tmr.alarm(2, 30000, tmr.ALARM_AUTO, getMessage)
 tmr.alarm(3, 60000, tmr.ALARM_SINGLE, resync)
