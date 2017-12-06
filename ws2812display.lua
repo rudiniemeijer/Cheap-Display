@@ -1,5 +1,5 @@
 -- ws2812display.lua
--- Main program for a cheap-and-easy RGB led display
+-- Basic display functions for addressing a serial led string into orthogonal x,y
 -- Copyright (c) 2017 Rudi Niemeijer
 -- MIT License
 
