@@ -10,7 +10,7 @@ The basic functionality is:
 
 ## Hardware
 ### Bill of materials
-In order to re-create this display, the following parts are needed:
+<img src="39x5strings.jpg" width="500" align="right"> In order to re-create this display, the following parts are needed:
 * A string of 39x5 = 195 WS2812B leds, preferably with 60 leds per meter (300 per 5 meter). You can order them from BangGood [here](https://www.banggood.com/AUDEW-1M4M5M-RGB-SMD5050-WS2812-300-LED-Flexible-Strip-Light-Addressable-Xmas-Party-Decor-DC5V-p-1101121.html?rmmds=search&ID=515211&cur_warehouse=CN) for about € 30,-. Note that there are many different type of RGB leds on the market, not all of them equal. Make sure to select a string of WS2812 with 60 leds per meter
 * A NodeMCU
 * A micro USB socket, in order to be able to power both the NodeMCU and the string of leds from one 5V power source, without damaging the NodeMCU
