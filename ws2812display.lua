@@ -1,3 +1,8 @@
+-- ws2812display.lua
+-- Main program for a cheap-and-easy RGB led display
+-- Copyright (c) 2017 Rudi Niemeijer
+-- MIT License
+
 displayWidth = 39
 displayHeight = 5
 
